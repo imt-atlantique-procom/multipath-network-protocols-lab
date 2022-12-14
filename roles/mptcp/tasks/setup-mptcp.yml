@@ -1,0 +1,10 @@
+- name: "[{{ ansible_hostname }}] Configure MPTCP"
+  script: roles/mptcp/scripts/{{ ansible_hostname }}_configure_mptcp.sh
+  become: true
+  args:
+    creates: /root/.mptcp_configured
+
+- name: "[{{ ansible_hostname }}] Enable MPTCP"
+  shell: "sysctl -w net.mptcp.enabled=1"
+  become: true
+  changed_when: false

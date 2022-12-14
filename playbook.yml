@@ -1,0 +1,14 @@
+- name: Configure IP routes on VM1 & VM3
+  hosts: VM1,VM3
+  roles:
+    - role: ip-route
+
+- name: Enable IP forwarding on VM2
+  hosts: VM2
+  roles:
+    - role: ip-forwarding
+
+- name: Configure MPCTP on VM1
+  hosts: VM1
+  roles:
+    - role: mptcp

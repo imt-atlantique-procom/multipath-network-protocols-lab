@@ -1,0 +1,7 @@
+- name: "[{{ ansible_hostname }}] Add static IP routes"
+  become: true
+  register: add_route
+  script: roles/ip-route/scripts/{{ ansible_hostname }}_add_routes.sh
+  args:
+    creates: /root/.routes_updated
+  changed_when: false

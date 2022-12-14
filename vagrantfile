@@ -1,0 +1,74 @@
+# './vagrantfile' 
+# ---
+# This Vagrantfile configuration file defines the infrastructure
+# (including virtual networks and machines) we want to create for
+# our network test lab.
+# ---
+
+# -------- VAGRANT FILE --------
+
+VAGRANTFILE_API_VERSION = 2
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    
+    # General VM configuration
+
+    config.vm.provider "virtualbox" do |node|
+        node.memory = 1024
+        node.cpus = 2
+    end
+
+    config.vm.provision "ansible" do |ansible|
+        ansible.verbose = "v"
+        ansible.playbook = "playbook.yml"
+    end
+
+    # -------- VM DEFINITION --------
+
+    # VM1
+
+    config.vm.define "VM1" do |config|
+        config.vm.hostname = "VM1"
+        config.vm.box = "ubuntu/jammy64"
+        config.vm.box_version = "20221201.0.0"
+
+        config.vm.network "private_network", ip: "10.0.10.10",
+            virtualbox__intnet: "net10"
+        config.vm.network "private_network", ip: "10.0.20.10",
+            virtualbox__intnet: "net20"
+        config.vm.network "private_network", ip: "10.0.30.10",
+            virtualbox__intnet: "net30"
+        config.vm.network "private_network", ip: "10.0.40.10",
+            virtualbox__intnet: "net40"
+    end
+
+    # VM2
+
+    config.vm.define "VM2" do |config|
+        config.vm.hostname = "VM2"
+        config.vm.box = "ubuntu/jammy64"
+        config.vm.box_version = "20221201.0.0"
+
+        config.vm.network "private_network", ip: "10.0.10.20",
+            virtualbox__intnet: "net10"
+        config.vm.network "private_network", ip: "10.0.20.20",
+            virtualbox__intnet: "net20"
+        config.vm.network "private_network", ip: "10.0.30.20",
+            virtualbox__intnet: "net30"
+        config.vm.network "private_network", ip: "10.0.40.20",
+            virtualbox__intnet: "net40"
+        config.vm.network "private_network", ip: "10.0.0.20",
+            virtualbox__intnet: "net0"
+    end
+
+    # VM3
+
+    config.vm.define "VM3" do |config|
+        config.vm.hostname = "VM3"
+        config.vm.box = "ubuntu/jammy64"
+        config.vm.box_version = "20221201.0.0"
+
+        config.vm.network "private_network", ip: "10.0.0.30",
+            virtualbox__intnet: "net0"
+    end
+
+end

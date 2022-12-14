@@ -1,0 +1,3 @@
+- name: "[{{ ansible_hostname }}] Disable MPTCP"
+  shell: "sysctl -w net.mptcp.enabled=0"
+  become: true

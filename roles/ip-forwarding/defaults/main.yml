@@ -1,0 +1,2 @@
+# Defaults for ip-forwarding role
+ip_forwarding_enabled: true
